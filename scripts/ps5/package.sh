@@ -79,11 +79,11 @@ cp -- "${ROOT}"/src/chrome-ui/*.html "${ROOT}"/src/chrome-ui/*.css "${ROOT}"/src
 cp -- "${DL}/cacert.pem" "${OUT}/cacert.pem"
 # Fonts, their licenses and fonts.conf (pointing at ${INSTALL_DIR}/fonts).
 "${ROOT}/scripts/ps5/fonts/stage-fonts.sh" "${OUT}/fonts" "${OUT}/LICENSES" "${INSTALL_DIR}"
-# Add-ons: the bundled ad-block rulesets (EasyList/EasyPrivacy and the cookie
-# list), the SponsorBlock user script and their attributions. This is the
-# first-run / offline baseline; the browser refetches and recompiles on the
-# console (see docs). Uses tools/addons_convert via core::adblock.
-"${ROOT}/scripts/ps5/addons/stage-addons.sh" "${OUT}/addons" "${OUT}/LICENSES" "${INSTALL_DIR}"
+# Lampa PS5 intentionally ships without optional ad-block filter snapshots.
+# Those live lists change between CI runs and are not needed to run Lampa.
+# Keep a valid empty manifest for the shared ProsperoWeb add-ons loader.
+mkdir -p "${OUT}/addons"
+cp -- "${ROOT}/scripts/ps5/addons/lampa-sources.json" "${OUT}/addons/sources.json"
 cp -- "${ROOT}/LICENSE" "${OUT}/LICENSES/GPL-3.0-or-later.txt"
 
 cat > "${OUT}/LICENSES/cacert-MPL-2.0.txt" <<'EOF'
@@ -111,10 +111,9 @@ Noto-Color-Emoji-OFL-1.1.txt, Noto-Sans-CJK-OFL-1.1.txt), Liberation
 Sans, Serif and Mono (SIL OFL 1.1: Liberation-fonts-OFL-1.1.txt), DejaVu
 (DejaVu-fonts.txt). The fonts are unmodified.
 CA bundle: MPL-2.0 (cacert-MPL-2.0.txt).
-Ad-block filter lists (EasyList, EasyPrivacy, EasyList Cookie List) and the
-bundled SponsorBlock user script: see filter-lists.txt. The ad blocker is
-not uBlock Origin and the SponsorBlock script is not the SponsorBlock
-extension; both are independent implementations using the public lists/API.
+This Lampa build does not bundle optional ad-block filter lists or
+SponsorBlock scripts. The shared browser engine retains the add-on APIs,
+but both optional features are disabled in this package.
 EOF
 
 # Defaults from src/frontend/ps5/ps5_config.h; config.json overrides them.
@@ -127,7 +126,7 @@ cat > "${OUT}/config.json.sample" <<EOF
   "height": 1080,
   "natural_scroll": false,
   "addons": {
-    "adblock": { "enabled": true, "cookie_banners": false, "auto_update": true, "last_updated": 0 },
+    "adblock": { "enabled": false, "cookie_banners": false, "auto_update": false, "last_updated": 0 },
     "sponsorblock": { "enabled": false, "categories": ["sponsor"] }
   }
 }

@@ -36,7 +36,12 @@ struct Ps5Config {
   // (mouse-wheel direction, the previous behaviour).
   bool natural_scroll = false;
   // Bundled add-ons (ad blocker, SponsorBlock); defaults when absent.
-  core::AddonsConfig addons;
+  core::AddonsConfig addons = [] {
+    core::AddonsConfig config;
+    config.adblock.enabled = false;
+    config.adblock.auto_update = false;
+    return config;
+  }();
 
   // Reads "config" from storage (JSON). Missing or invalid keys keep the
   // defaults. Never throws.

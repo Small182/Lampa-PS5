@@ -1,0 +1,7 @@
+{
+  "ads": { "prefix": "adblock-ads", "chunks": 0, "sources": [] },
+  "cookie": { "prefix": "adblock-cookie", "chunks": 0, "sources": [] },
+  "per_chunk": 5000,
+  "max_total": 0,
+  "max_lists": 0
+}

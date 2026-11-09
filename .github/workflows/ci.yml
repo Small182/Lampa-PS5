@@ -257,12 +257,21 @@ jobs:
         env:
           DATA_ZIP: ${{ steps.names.outputs.data-zip }}
         run: |
-          scripts/ci/timed.sh "Package" scripts/ps5/package.sh
           mkdir -p "${ARTIFACTS}"
+          scripts/ci/timed.sh "Package" scripts/ps5/package.sh 2>&1 | tee "${ARTIFACTS}/package.log"
           # dist/ mirrors /data/ on the console: <app>/ and homebrew/<app>/.
           (cd dist && "${GITHUB_WORKSPACE}/scripts/ci/timed.sh" "Data zip" \
             zip -r -q "${ARTIFACTS}/${DATA_ZIP}" .)
           ls -l "${ARTIFACTS}"
+
+      - name: Upload packaging diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: LampaPS5-package-log
+          path: ${{ env.ARTIFACTS }}/package.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Save downloads
         if: always() && steps.dl-cache.outputs.cache-hit != 'true' && hashFiles('third_party/dl/**') != ''
