@@ -62,6 +62,8 @@ class ShellController {
     int width = 1920;
     int height = 1080;
     std::string home_url = "about:blank";
+    // PS5 Lampa launcher mode; disabled by default to preserve shell tests.
+    bool kiosk_mode = false;
     std::string user_agent;
     std::string language = "en";  // "en" or "ru"
     // Input/feature probe page, offered as "Diagnostics" in the main menu

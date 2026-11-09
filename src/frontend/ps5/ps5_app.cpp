@@ -350,6 +350,7 @@ int Ps5App::run() {
   cfg.width = width_;
   cfg.height = height_;
   cfg.home_url = config_.home_url;
+  cfg.kiosk_mode = true;
   // The compositor draws the pointer (display/pointer.h): moving it never
   // repaints the chrome view.
   cfg.native_pointer = true;

@@ -32,14 +32,14 @@ TEST_SUITE("spawn_self_path") {
     char buf[256] = {};
     CHECK(ps5_spawn_resolve_self_path("WebProcess", env_unset, buf,
                                       sizeof(buf)) == 0);
-    CHECK(std::string(buf) == "/data/prosperoweb/prosperoweb.elf");
+    CHECK(std::string(buf) == "/data/lampa-ps5/prosperoweb.elf");
   }
 
   TEST_CASE("empty env is ignored") {
     char buf[256] = {};
     CHECK(ps5_spawn_resolve_self_path("WebProcess", env_empty, buf,
                                       sizeof(buf)) == 0);
-    CHECK(std::string(buf) == "/data/prosperoweb/prosperoweb.elf");
+    CHECK(std::string(buf) == "/data/lampa-ps5/prosperoweb.elf");
   }
 
   TEST_CASE("absolute argv0 rescues a too-small buffer") {

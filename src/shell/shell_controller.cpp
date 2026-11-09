@@ -152,9 +152,15 @@ ShellController::~ShellController() {
 void ShellController::start() {
   session_.load_history(history_);
   session_.load_bookmarks(bookmarks_);
-  // Lampa kiosk: open the fixed HTTP homepage on every launch.
-  open_tab(config_.home_url, true);
-  fullscreen_.toggle_chrome();
+  if (config_.kiosk_mode) {
+    // Lampa launcher: open the fixed homepage and hide browser chrome.
+    open_tab(config_.home_url, true);
+    fullscreen_.toggle_chrome();
+  } else if (!session_.load_tabs(tabs_) || tabs_.empty()) {
+    open_tab(config_.home_url, true);
+  } else {
+    after_tab_switch();
+  }
   apply_geometry();
   render_now();
 }
