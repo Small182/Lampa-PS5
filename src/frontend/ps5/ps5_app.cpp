@@ -73,6 +73,25 @@ constexpr const char* kInputTraceScript = R"JS((function () {
 })();
 )JS";
 
+// Lampa occasionally passes a failed poster/backdrop image to Canvas while
+// preparing its blurred background. WebKit correctly rejects that drawImage,
+// but Lampa's global error overlay then obscures the movie details. Ignore
+// only unusable HTMLImageElements; preserve every other Canvas exception.
+constexpr const char* kLampaCanvasImageGuard = R"JS((function () {
+  'use strict';
+  if (location.hostname !== 'lampa.mx' && !location.hostname.endsWith('.lampa.mx')) return;
+  if (!window.CanvasRenderingContext2D) return;
+  var proto = CanvasRenderingContext2D.prototype;
+  var original = proto.drawImage;
+  if (typeof original !== 'function') return;
+  proto.drawImage = function (source) {
+    if (source instanceof HTMLImageElement &&
+        (!source.complete || source.naturalWidth === 0 || source.naturalHeight === 0)) return;
+    return original.apply(this, arguments);
+  };
+})();
+)JS";
+
 constexpr const char* kBaseDir = kPs5DataDir;
 
 std::string tmp_path(const std::string& name) { return std::string(kBaseDir) + "/tmp/" + name; }
@@ -280,6 +299,7 @@ int Ps5App::run() {
   std::vector<std::string> user_scripts = {core::kEmeDetectorScript,
                                            core::kFocusReporterScript,
                                            core::kGamepadKeyBridgeScript,
+                                           kLampaCanvasImageGuard,
                                            kInputTraceScript};
   factory_ = std::make_unique<Ps5EngineFactory>(kBaseDir, user_scripts,
                                                 config_.user_agent);
@@ -420,38 +440,15 @@ void Ps5App::draw_splash() {
     log_printf("splash: SDL_GetWindowSurface failed: %s", SDL_GetError());
     return;
   }
-  // Text first (FreeType, no WebKit or fontconfig yet); without it the
-  // screen still shows the background and the progress bar.
-  const std::string font = runtime_assets_dir() + "/fonts/NotoSans-Regular.ttf";
-  std::string error;
-  const int title_px = std::max(24, surface->h * 96 / 1080);
-  const int subtitle_px = std::max(12, surface->h * 30 / 1080);
-  const bool text = render_splash_text(font, "ProsperoWeb", title_px, splash_title_, error) &&
-                    render_splash_text(font, "Loading…", subtitle_px, splash_subtitle_, error);
-  if (!text) {
-    splash_title_ = {};
-    splash_subtitle_ = {};
-  }
-  splash_layout_ = display::layout_splash(surface->w, surface->h, &splash_title_,
-                                          &splash_subtitle_);
-  if (SDL_MUSTLOCK(surface)) {
-    SDL_LockSurface(surface);
-  }
-  // The PS5 surface is ABGR8888; anything else is drawn as ARGB.
-  const display::SplashTarget target{static_cast<std::uint32_t*>(surface->pixels), surface->w,
-                                     surface->h, surface->pitch / 4,
-                                     surface->format->format == SDL_PIXELFORMAT_ABGR8888};
-  display::paint_splash(target, splash_layout_, &splash_title_, &splash_subtitle_, 0.0);
-  if (SDL_MUSTLOCK(surface)) {
-    SDL_UnlockSurface(surface);
-  }
+  // Quiet launch: keep a black frame until the first real WebKit paint.
+  // Progress remains in the log; loader errors still have their own screen.
+  SDL_FillRect(surface, nullptr, SDL_MapRGB(surface->format, 0, 0, 0));
   if (SDL_UpdateWindowSurface(window_) != 0) {
     log_printf("splash: SDL_UpdateWindowSurface failed: %s", SDL_GetError());
     return;
   }
   splash_drawn_ = true;
-  log_printf("splash: drawn and flipped, %s (%llu ms)",
-             text ? "title and progress bar" : ("progress bar only: " + error).c_str(),
+  log_printf("splash: quiet launch frame shown (%llu ms)",
              static_cast<unsigned long long>(SDL_GetTicks64() - t0));
 
   const char* hold = std::getenv("PROSPEROWEB_SPLASH_HOLD_MS");
@@ -658,29 +655,13 @@ void Ps5App::mark_splash_stage(unsigned stage) {
 // Main thread, only while the splash is up and the surface is not being
 // presented.
 void Ps5App::update_splash_progress(SDL_Surface* surface) {
+  (void)surface;
   const unsigned stages = splash_stages_.load(std::memory_order_acquire);
   if (!splash_drawn_ || stages == splash_shown_stages_) {
     return;
   }
   splash_shown_stages_ = stages;
   const int done = std::popcount(stages);
-  if (SDL_MUSTLOCK(surface)) {
-    SDL_LockSurface(surface);
-  }
-  const display::SplashTarget target{static_cast<std::uint32_t*>(surface->pixels), surface->w,
-                                     surface->h, surface->pitch / 4,
-                                     surface->format->format == SDL_PIXELFORMAT_ABGR8888};
-  const display::Rect r = display::paint_splash_progress(
-      target, splash_layout_, static_cast<double>(done) / kSplashStages);
-  if (SDL_MUSTLOCK(surface)) {
-    SDL_UnlockSurface(surface);
-  }
-  const SDL_Rect rect{r.x, r.y, r.w, r.h};
-  if (presenter_) {
-    presenter_->submit({rect});
-  } else {
-    SDL_UpdateWindowSurfaceRects(window_, &rect, 1);
-  }
   log_printf("splash: stage %d of %d (0x%x)", done, kSplashStages, stages);
 }
 
