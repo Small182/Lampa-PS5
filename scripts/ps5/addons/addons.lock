@@ -21,24 +21,24 @@
 # text is untrusted data: only parsed, never executed. Set ADDONS_ALLOW_
 # UNPINNED=1 to take whatever upstream serves now after a drift.
 #
-# Snapshot pinned 2026-11-01.
+# Snapshot pinned 2026-11-09.
 
-ads easylist.txt d32a74f55f2692643ee2cdd39d91af670428cc689072ecf0cbbf28dcb72915ec https://easylist.to/easylist/easylist.txt
-ads easyprivacy.txt cc7ad14ace719b4e5e8dcdb0e3726ce9c7eb6ae8bd3922454f05824a23394af4 https://easylist.to/easylist/easyprivacy.txt
-adsx ublock-filters.txt 118d32ee30089ed3b8cecb30e63eb884bfd138dabd10d51fb3edcc8ef8acdad0 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt
-adsx ublock-filters-general.txt effe7c91af7bbf0a8835f401491199cf2aa952e5fe639191687c9ed77438f45b https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-general.txt
+ads easylist.txt df3421ff9cf71f17d0de1cc1d76c9015979108438635d00066368efdb9f2a00e https://easylist.to/easylist/easylist.txt
+ads easyprivacy.txt c2ceeaec376ee9aa993993bfe44f719b0c6cb4fb5ba5bd720f318c7732688049 https://easylist.to/easylist/easyprivacy.txt
+adsx ublock-filters.txt da53d38169d4f33ca2f4f3532a9f91b472a45f0ac618f36ceca85d6dc3d3849d https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt
+adsx ublock-filters-general.txt 7d6df91224693c536431f6a00c09724f1dd3fb1302f829af81f5e9c91ae74a0d https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-general.txt
 adsx ublock-filters-mobile.txt d47b240a3305d4ff5d401dbe13297cac4500cb60c4758b46e33cc118e6cbe81e https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-mobile.txt
-adsx ublock-filters-2020.txt 7b0e9de801147e997c6e5be0ba3af3a865a6613fccb9a55f613ac66f4c1e087a https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2020.txt
-adsx ublock-filters-2021.txt f8e8dbea4f3f516ff1844528ab48031ffc348f90eca40aef5bfe1c0840000f89 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt
-adsx ublock-filters-2022.txt 3a752f40c39d24df885922496b4a97d3f8a642e8af21ad8694cb661b19af8e70 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2022.txt
-adsx ublock-filters-2023.txt b4455e65cb94f0b4a214cf22e1af1b5239a29e1bef4db9481f907f4aa006108a https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2023.txt
-adsx ublock-filters-2024.txt 00bbcecbfbda9207925731a498057fdd1928f66b0f8904df80fc5dd704ee3bb7 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2024.txt
-adsx ublock-filters-2025.txt 35c5ce452369c692a6131f3f6c1e23eb51ce52c6d4fe2eef1db62c5df0ea70a0 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2025.txt
-adsx ublock-filters-2026.txt 432e33b2b5de54673cd60ada146cac03949747fd5357c87c2d0717572df9d987 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2026.txt
-adsx ublock-privacy.txt 3e41e7c216e7c982032c6fd4c856c6fc13fe25ab563ed664838f862c30fb4819 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt
-adsx ublock-badware.txt 88d09e78df4568ab36a39f4085d1df2bd0eca7bff70883865852fa366856807f https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt
-adsx ublock-unbreak.txt 67678f10ff1ca874d13f9878e78f9035bc98dca289b271fea651c181f7e5ab53 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt
-adsx ublock-quick-fixes.txt d639d95b7a653943fe5437cac97fa08e7742c10a7225a9ccde3e3416fbd8a556 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt
-adsx peter-lowe.txt 369b873ee7a0e1d77879bbc0ed572d0eb68c283e518acb4e1c13d0035dc2d076 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=0&mimetype=plaintext
+adsx ublock-filters-2020.txt 1c6e62c5d3daecaebf1d75d72807e61879bbe55234807c3c2d03b8d35e863535 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2020.txt
+adsx ublock-filters-2021.txt 98f1e4dca0f03b395fa38c3a244faa72b230bfb65daf7f2fb35bf7877032db70 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt
+adsx ublock-filters-2022.txt 2b40860ffdb57e265a38c576ece70bca228b149155513ba6dad30db6a69bdedc https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2022.txt
+adsx ublock-filters-2023.txt a7297bb83f0bbc228210c32be82e3e892d8c7f3f3f87953196fd6c0d77b71cbd https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2023.txt
+adsx ublock-filters-2024.txt d25427a9c20963b47531556a536aa95a540337d8c5f16f25cf3a65c5fbdad79d https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2024.txt
+adsx ublock-filters-2025.txt 6293bffca0a9e740ca7e1a840494428d958c1671f4d2ac991028b2a7ac89c668 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2025.txt
+adsx ublock-filters-2026.txt 5b7e44fbede2ffa2dbcb54d43a0299023af59c6e41f05f2bcfcb2c84b20dd8ca https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2026.txt
+adsx ublock-privacy.txt 42640b4ffc46e1fba0226773dfb0d9e04f3a84ed36de707eac5e6ca104c2c87f https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt
+adsx ublock-badware.txt bd4c978eb09947ad9f08b6b659cab42297a0f04d9a4f5215a8ef5fe1a77194d6 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt
+adsx ublock-unbreak.txt 0645b79f33dd0504a1e8c62c723dbb77edb82f2ae46b2a5edb88a9ea2bb8de24 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt
+adsx ublock-quick-fixes.txt fff520f1bcff660a33e2328433e8cd5cff1d9ceeb05e048ad2c49737b2721900 https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt
+adsx peter-lowe.txt 68fd03880a70202368484e675c3989b0519b0c019af664f9676ab17cc302e708 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=0&mimetype=plaintext
 
-cookiex fanboy-cookiemonster.txt 38e92c99161d6a4822386fd23c5ef11823be4a0b2a0899ccbf223d548f5ae8ea https://secure.fanboy.co.nz/fanboy-cookiemonster.txt
+cookiex fanboy-cookiemonster.txt acfd15dfb7f975240d5d4bec7e0c1e4363d3eff36b80471dd63586a2d680c007 https://secure.fanboy.co.nz/fanboy-cookiemonster.txt
