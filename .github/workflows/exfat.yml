@@ -1,0 +1,81 @@
+name: Package Lampa PS5 as exFAT (no WebKit build)
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_run_id:
+        description: "Successful CI run containing LAMP00001.zip"
+        required: true
+        default: "42602538490"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  exfat:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Download existing native title
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_RUN: ${{ inputs.base_run_id }}
+        run: |
+          mkdir -p source
+          gh run download "$BASE_RUN" --repo "$GITHUB_REPOSITORY" \
+            --name LAMP00001.zip --dir source
+
+      - name: Validate and extract Lampa title
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import json
+
+          source = Path('source/LAMP00001.zip')
+          if not source.is_file():
+              raise SystemExit('Expected a raw LAMP00001.zip from the CI run')
+          with ZipFile(source) as z:
+              names = z.namelist()
+              if any(n.startswith('/') or '..' in Path(n).parts for n in names):
+                  raise SystemExit('Unsafe path in ZIP')
+              for item in ('LAMP00001/eboot.bin', 'LAMP00001/sce_sys/param.json',
+                           'LAMP00001/prosperoweb.elf'):
+                  if item not in names:
+                      raise SystemExit(f'Missing native title component: {item}')
+              z.extractall('unpacked')
+          app = Path('unpacked/LAMP00001')
+          metadata = json.loads((app / 'sce_sys/param.json').read_text())
+          if metadata.get('titleId') != 'LAMP00001':
+              raise SystemExit('Unexpected PS5 title ID')
+          print('Validated LAMP00001 native title')
+          PY
+
+      - name: Download Alembic converter
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p converter
+          gh release download --repo fthdgn-gh/Alembic --pattern '*-linux-x64.tar.gz' --dir converter
+          tar -xzf converter/*-linux-x64.tar.gz -C converter
+          find converter -type f -name alembic -exec chmod +x {} \;
+
+      - name: Convert title to exFAT image
+        run: |
+          binary="$(find converter -type f -name alembic -print -quit)"
+          test -n "$binary"
+          mkdir -p output
+          "$binary" convert unpacked/LAMP00001/ output/Lampa-PS5.exfat
+          "$binary" game-info output/Lampa-PS5.exfat
+          "$binary" ls output/Lampa-PS5.exfat | head -80
+          sha256sum output/Lampa-PS5.exfat > output/SHA256SUMS
+
+      - name: Upload exFAT image
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lampa-PS5-exfat
+          path: output/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
