@@ -93,7 +93,18 @@ fetch() {
     local url="$1" out="${DL}/$2" sha="$3"
     mkdir -p "${DL}"
     if [[ ! -f "${out}" ]]; then
-        run curl -fL --retry 3 -o "${out}.part" "${url}"
+        if ! run curl -fL --retry 3 -o "${out}.part" "${url}"; then
+            if [[ "${url}" == "${ICU_DATA_URL}" ]]; then
+                # GitHub's release-assets CDN sometimes returns persistent 504s.
+                # SourceForge mirrors the same upstream ICU release artifact;
+                # the pinned SHA256 below still verifies its contents.
+                run curl -fL --retry 5 --retry-all-errors \
+                    -o "${out}.part" \
+                    "https://sourceforge.net/projects/international-component.mirror/files/release-77-1/icu4c-77_1-data.zip/download"
+            else
+                die "download failed: ${url}"
+            fi
+        fi
         run mv "${out}.part" "${out}"
     fi
     echo "${sha}  ${out}" | sha256sum --check --quiet - \
