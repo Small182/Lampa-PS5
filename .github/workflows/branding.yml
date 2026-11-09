@@ -70,7 +70,31 @@ jobs:
           mkdir -p build-dist/branding/baseline
           gh run download "$BASE_RUN" --repo "$GITHUB_REPOSITORY" \
             --name LAMP00001.zip --dir build-dist/branding/baseline
-          test -f build-dist/branding/baseline/LAMP00001.zip
+          # Upload-artifact may expose a ZIP as a raw file or unpack its
+          # contents. Normalize both forms to a ZIP with LAMP00001/ at top.
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZIP_DEFLATED, ZipFile
+
+          root = Path('build-dist/branding/baseline')
+          target = root / 'LAMP00001.zip'
+          if target.is_file():
+              print(f'[branding] downloaded ZIP: {target}')
+          else:
+              candidates = [p for p in root.rglob('eboot.bin')
+                            if p.parent.name == 'LAMP00001']
+              if not candidates:
+                  print('[branding] extracted files:',
+                        [str(p) for p in list(root.rglob('*'))[:30]])
+                  raise SystemExit('LAMP00001/eboot.bin missing from downloaded artifact')
+              app = candidates[0].parent
+              print(f'[branding] downloaded extracted title: {app}')
+              with ZipFile(target, 'w', ZIP_DEFLATED, compresslevel=6) as z:
+                  for p in sorted(app.rglob('*')):
+                      if p.is_file():
+                          z.write(p, f'LAMP00001/{p.relative_to(app).as_posix()}')
+              print(f'[branding] repacked baseline ZIP: {target}')
+          PY
 
       - name: Replace artwork in signed app archive
         run: |
