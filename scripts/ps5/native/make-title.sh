@@ -33,7 +33,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 SDK="${PS5_PAYLOAD_SDK:-/opt/ps5-payload-sdk}"
-TITLE_ID="PRWB00001"
+TITLE_ID="LAMP00001"
 NATIVE_ELF="${1:-${ROOT}/build-ps5/src/frontend/ps5/prosperoweb-native.elf}"
 PAYLOAD_ELF="${2:-${ROOT}/dist/prosperoweb/prosperoweb.elf}"
 BROKER_ELF="${BROKER_ELF:-$(dirname "${NATIVE_ELF}")/prosperoweb-broker.elf}"

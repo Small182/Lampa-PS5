@@ -9,7 +9,7 @@
 #include <string.h>
 
 // Fixed install location of our own ELF, next to its data directory.
-static const char kDefaultSelfPath[] = "/data/prosperoweb/prosperoweb.elf";
+static const char kDefaultSelfPath[] = "/data/lampa-ps5/prosperoweb.elf";
 
 int ps5_spawn_resolve_self_path(const char* argv0,
                                 const char* (*getenv_fn)(const char*),

@@ -30,13 +30,13 @@ concurrency:
 env:
   # --- Naming: the one place to change when the product is renamed. -------
   # Prefix of artifact and release asset names.
-  PRODUCT_NAME: ProsperoWeb
+  PRODUCT_NAME: LampaPS5
   # dist/<APP_NAME>/, <APP_NAME>.elf and the CMake target.
   APP_NAME: prosperoweb
   # Prefix of the CMake options (<PREFIX>_FRONTEND, <PREFIX>_BUILD_TESTS).
   CMAKE_OPTION_PREFIX: PROSPEROWEB
   # Title ID of scripts/ps5/native/make-title.sh (build-dist/<ID>.zip).
-  NATIVE_TITLE_ID: PRWB00001
+  NATIVE_TITLE_ID: LAMP00001
   # --- Toolchain --------------------------------------------------------------
   PS5_SDK_VERSION: v0.41.1
   PS5_SDK_SHA256: e811bc2e4676c5bb7f80a8fe928d2985dce599996a5ca6b54da3e72699287887

@@ -51,6 +51,7 @@ Ps5Config Ps5Config::load(core::Storage& storage) {
     cfg.natural_scroll = it->get<bool>();
   }
   cfg.addons = core::AddonsConfig::from_config_root(doc);
+  cfg.home_url = "http://lampa.mx";
 
   return cfg;
 }

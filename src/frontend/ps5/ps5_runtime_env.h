@@ -12,12 +12,12 @@
 namespace prosperoweb::frontend {
 
 // Install and persistence root on the console.
-inline constexpr const char* kPs5DataDir = "/data/prosperoweb";
+inline constexpr const char* kPs5DataDir = "/data/lampa-ps5";
 
 // Install roots of the releases under earlier names, newest first
 // (ProsperoBrowser, ps5browser). The newest one that has a profile is
 // copied into kPs5DataDir once (prosperoweb/core/legacy_profile.h).
-inline constexpr const char* kLegacyDataDirs[] = {"/data/prosperobrowser", "/data/ps5browser"};
+inline constexpr const char* kLegacyDataDirs[] = {"/data/lampa-ps5"};
 
 // Maps a config.json language ("en", "ru", or already a tag like "de-DE")
 // to the BCP 47 tag WebKit expects in SYSTEM_LANGUAGE.

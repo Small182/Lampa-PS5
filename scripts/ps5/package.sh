@@ -35,7 +35,7 @@ DL="${WORK}/dl"
 DIST="${ROOT}/dist"
 OUT="${DIST}/prosperoweb"
 TILE="${DIST}/homebrew/prosperoweb"
-INSTALL_DIR="/data/prosperoweb"
+INSTALL_DIR="/data/lampa-ps5"
 
 CACERT_URL="https://curl.se/ca/cacert.pem"
 
@@ -120,7 +120,7 @@ EOF
 # Defaults from src/frontend/ps5/ps5_config.h; config.json overrides them.
 cat > "${OUT}/config.json.sample" <<EOF
 {
-  "home_url": "https://duckduckgo.com/",
+  "home_url": "http://lampa.mx",
   "language": "en",
   "chrome_dir": "${INSTALL_DIR}/chrome",
   "width": 1920,

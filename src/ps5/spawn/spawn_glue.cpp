@@ -846,7 +846,7 @@ extern "C" int ps5_spawn_broker_main(void) {
   options.tcp_port = broker_tcp_port(std::getenv("PROSPEROWEB_SPAWN_PORT"));
   // Open the profile only after the sockets listen, so the UI's connect()
   // lands in the backlog immediately instead of racing a not-yet-bound socket.
-  options.on_listening = [] { open_profile("/data/prosperoweb"); };
+  options.on_listening = [] { open_profile("/data/lampa-ps5"); };
   broker_set_spawn_hook(elfldr_hook);
   broker_set_selftest_hook(ipc_selftest_broker);
   return broker_serve(options, &g_stop);

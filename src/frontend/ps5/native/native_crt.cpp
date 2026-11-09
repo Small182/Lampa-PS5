@@ -72,7 +72,7 @@ bool present(F* function) {
 constexpr int kOpenRead = 0x0;
 constexpr int kOpenWriteCreateTruncate = 0x1 | 0x200 | 0x400;  // O_WRONLY|O_CREAT|O_TRUNC
 constexpr int kOpenWriteCreateAppend = 0x1 | 0x8 | 0x200;      // O_WRONLY|O_APPEND|O_CREAT
-constexpr const char* kBootFile = "/data/prosperoweb/boot.txt";
+constexpr const char* kBootFile = "/data/lampa-ps5/boot.txt";
 bool g_boot_file = false;
 
 std::size_t length_of(const char* text) {
@@ -107,7 +107,7 @@ void open_boot_file() {
     return;
   }
   if (present(&sceKernelMkdir)) {
-    sceKernelMkdir("/data/prosperoweb", 0755);
+    sceKernelMkdir("/data/lampa-ps5", 0755);
   }
   const int fd = sceKernelOpen(kBootFile, kOpenWriteCreateTruncate, 0644);
   if (fd >= 0) {
