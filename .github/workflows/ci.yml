@@ -3,6 +3,19 @@ name: CI
 on:
   push:
     branches: ["**"]
+    # Presentation-only commits are repackaged by branding.yml from a known-good
+    # native build. There is no reason to rebuild the whole PS5 WebKit port.
+    paths-ignore:
+      - assets/icon0.svg
+      - assets/background.svg
+      - assets/sce_sys/icon0.png
+      - assets/sce_sys/pic0.png
+      - assets/sce_sys/pic1.png
+      - docs/screenshots/store-icon-preview.png
+      - docs/screenshots/store-background-preview.png
+      - .github/workflows/branding.yml
+      - scripts/ps5/native/rebrand-title.py
+      - .github/workflows/ci.yml
   pull_request:
   workflow_dispatch:
   # release.yml builds the tag through this workflow.

@@ -1,52 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<!-- ProsperoWeb launch icon (sce_sys/icon0.png, 512x512). Original artwork:
-     a web globe with a moon on a tilted orbit (Prospero is a moon of Uranus),
-     in the browser chrome palette (src/chrome-ui/chrome.css).
-     Rendered by scripts/assets/render.sh. -->
+<!-- Lampa PS5 artwork. The white concentric-ring mark is adapted from
+     yumata/lampa img/logo-icon.svg; project source: github.com/yumata/lampa.
+     Render at 512x512 to assets/sce_sys/icon0.png. -->
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="bg" cx="0.30" cy="0.22" r="1.0">
-      <stop offset="0" stop-color="#262a32"/>
-      <stop offset="0.55" stop-color="#1b1e24"/>
-      <stop offset="1" stop-color="#0b0c0f"/>
+    <radialGradient id="bg" cx="0.5" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#30353c"/>
+      <stop offset="0.54" stop-color="#1d2025"/>
+      <stop offset="1" stop-color="#111316"/>
     </radialGradient>
-    <linearGradient id="globe-fill" x1="0.2" y1="0.1" x2="0.8" y2="0.95">
-      <stop offset="0" stop-color="#7cb3ff"/>
-      <stop offset="1" stop-color="#2f6fd6"/>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#95caff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#95caff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4fa8e8"/>
+      <stop offset="1" stop-color="#9ce2ef"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#3d8bff" stop-opacity="0.32"/>
-      <stop offset="1" stop-color="#3d8bff" stop-opacity="0"/>
-    </radialGradient>
-    <clipPath id="globe"><circle cx="248" cy="264" r="138"/></clipPath>
   </defs>
-
   <rect width="512" height="512" fill="url(#bg)"/>
-  <circle cx="248" cy="264" r="220" fill="url(#glow)"/>
-
-  <!-- Orbit, back part (drawn before the globe, so the globe covers it). -->
-  <path d="M 40 264 A 208 70 0 0 1 456 264" transform="rotate(-24 248 264)"
-        fill="none" stroke="#9aa2b1" stroke-opacity="0.6" stroke-width="12"/>
-
-  <!-- Globe: solid sphere with dark grid lines. -->
-  <circle cx="248" cy="264" r="138" fill="url(#globe-fill)"/>
-  <g clip-path="url(#globe)" fill="none" stroke="#121418" stroke-opacity="0.55"
-     stroke-width="11" stroke-linecap="round">
-    <ellipse cx="248" cy="264" rx="58" ry="138"/>
-    <line x1="248" y1="120" x2="248" y2="408"/>
-    <path d="M 104 212 Q 248 244 392 212"/>
-    <path d="M 104 316 Q 248 284 392 316"/>
+  <circle cx="256" cy="210" r="184" fill="url(#halo)"/>
+  <!-- Official Lampa logo paths, scaled and centered. -->
+  <g transform="translate(146 92) scale(2)" fill="#f8fbff">
+    <path d="M81.6744 103.11C98.5682 93.7234 110 75.6967 110 55C110 24.6243 85.3757 0 55 0C24.6243 0 0 24.6243 0 55C0 75.6967 11.4318 93.7234 28.3255 103.11C14.8869 94.3724 6 79.224 6 62C6 34.938 27.938 13 55 13C82.062 13 104 34.938 104 62C104 79.224 95.1131 94.3725 81.6744 103.11Z"/>
+    <path d="M92.9546 80.0076C95.5485 74.5501 97 68.4446 97 62C97 38.804 78.196 20 55 20C31.804 20 13 38.804 13 62C13 68.4446 14.4515 74.5501 17.0454 80.0076C16.3618 77.1161 16 74.1003 16 71C16 49.4609 33.4609 32 55 32C76.5391 32 94 49.4609 94 71C94 74.1003 93.6382 77.1161 92.9546 80.0076Z"/>
+    <path d="M55 89C69.3594 89 81 77.3594 81 63C81 57.9297 79.5486 53.1983 77.0387 49.1987C82.579 54.7989 86 62.5 86 71C86 88.1208 72.1208 102 55 102C37.8792 102 24 88.1208 24 71C24 62.5 27.421 54.7989 32.9613 49.1987C30.4514 53.1983 29 57.9297 29 63C29 77.3594 40.6406 89 55 89Z"/>
+    <path d="M73 63C73 72.9411 64.9411 81 55 81C45.0589 81 37 72.9411 37 63C37 53.0589 45.0589 45 55 45C64.9411 45 73 53.0589 73 63Z"/>
   </g>
-  <circle cx="248" cy="264" r="138" fill="none" stroke="#121418" stroke-opacity="0.35" stroke-width="6"/>
-
-  <!-- Orbit, front part, over the globe, with a dark gap where it crosses it. -->
-  <path d="M 40 264 A 208 70 0 0 0 456 264" transform="rotate(-24 248 264)" clip-path="url(#globe)"
-        fill="none" stroke="#121418" stroke-opacity="0.6" stroke-width="30"/>
-  <path d="M 40 264 A 208 70 0 0 0 456 264" transform="rotate(-24 248 264)"
-        fill="none" stroke="#eef0f4" stroke-width="14" stroke-linecap="round"/>
-
-  <!-- The moon, on the front of the orbit at the right. -->
-  <circle cx="436" cy="206" r="36" fill="#eef0f4"/>
-  <circle cx="436" cy="206" r="36" fill="none" stroke="#121418" stroke-opacity="0.25" stroke-width="4"/>
+  <text x="256" y="418" text-anchor="middle" font-family="DejaVu Sans" font-size="60"
+        font-weight="bold" letter-spacing="7" fill="#f8fbff">LAMPA</text>
+  <rect x="156" y="439" width="200" height="4" rx="2" fill="url(#accent)"/>
+  <text x="256" y="472" text-anchor="middle" font-family="DejaVu Sans"
+        font-size="19" letter-spacing="6" fill="#a8b5c1">PS5</text>
 </svg>

@@ -1,70 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<!-- ProsperoWeb home screen background (sce_sys/pic0.png and pic1.png).
-     Original artwork: the icon's globe and orbit, large and faint, over a dark
-     gradient and a dot grid, with the wordmark at the right. The left half and
-     the bottom stay calm for the console's own UI. The wordmark is set in
-     Noto Sans Bold (SIL OFL 1.1). Rendered by scripts/assets/render.sh at
-     1920x1080 and 3840x2160. -->
+<!-- Lampa PS5 home-screen artwork: 1920x1080 SVG source.
+     The ring mark is from yumata/lampa img/logo-icon.svg (GPL-3.0).
+     PS5 DDS textures are rendered at 3840x2160 and BC7-compressed. -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b0c0f"/>
-      <stop offset="0.6" stop-color="#121418"/>
-      <stop offset="1" stop-color="#0e1626"/>
+      <stop offset="0" stop-color="#111317"/>
+      <stop offset="0.55" stop-color="#1d2128"/>
+      <stop offset="1" stop-color="#0d1723"/>
     </linearGradient>
-    <radialGradient id="glow" cx="1400" cy="470" r="620" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#3d8bff" stop-opacity="0.28"/>
-      <stop offset="0.6" stop-color="#3d8bff" stop-opacity="0.06"/>
-      <stop offset="1" stop-color="#3d8bff" stop-opacity="0"/>
+    <radialGradient id="glow" cx="1450" cy="350" r="750" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4fa8e8" stop-opacity="0.22"/>
+      <stop offset="0.6" stop-color="#4fa8e8" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#4fa8e8" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="globe-fill" x1="0.2" y1="0.1" x2="0.8" y2="0.95">
-      <stop offset="0" stop-color="#3d8bff" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#1b3f80" stop-opacity="0.35"/>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4fa8e8" stop-opacity="0"/>
+      <stop offset="0.4" stop-color="#4fa8e8"/>
+      <stop offset="1" stop-color="#9ce2ef"/>
     </linearGradient>
-    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
-      <circle cx="16" cy="16" r="1.6" fill="#9aa2b1"/>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.3" fill="#9bb2c7" opacity="0.3"/>
     </pattern>
-    <!-- The dot grid fades in towards the upper right only. -->
-    <radialGradient id="dots-fade" cx="1500" cy="420" r="900" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#fff" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-    </radialGradient>
-    <mask id="dots-mask"><rect width="1920" height="1080" fill="url(#dots-fade)"/></mask>
-    <clipPath id="globe"><circle cx="1400" cy="470" r="250"/></clipPath>
   </defs>
-
   <rect width="1920" height="1080" fill="url(#bg)"/>
-  <rect width="1920" height="1080" fill="url(#dots)" mask="url(#dots-mask)"/>
-  <rect width="1920" height="1080" fill="url(#glow)"/>
-
-  <!-- Wide orbit rings, as on the icon (tilted -24 degrees). -->
-  <g fill="none" transform="rotate(-24 1400 470)">
-    <ellipse cx="1400" cy="470" rx="560" ry="180" stroke="#7cb3ff" stroke-opacity="0.08" stroke-width="2"/>
-    <path d="M 1020 470 A 380 128 0 0 1 1780 470" stroke="#9aa2b1" stroke-opacity="0.35" stroke-width="10"/>
+  <circle cx="1480" cy="390" r="735" fill="url(#glow)"/>
+  <rect x="1050" y="0" width="870" height="1080" fill="url(#dots)" opacity="0.22"/>
+  <circle cx="1510" cy="416" r="360" stroke="#66b8ed" stroke-opacity="0.12" stroke-width="2" fill="none"/>
+  <circle cx="1510" cy="416" r="470" stroke="#66b8ed" stroke-opacity="0.075" stroke-width="2" fill="none"/>
+  <g transform="translate(1350 180) scale(3)" fill="#f4f8fc" opacity="0.96">
+    <path d="M81.6744 103.11C98.5682 93.7234 110 75.6967 110 55C110 24.6243 85.3757 0 55 0C24.6243 0 0 24.6243 0 55C0 75.6967 11.4318 93.7234 28.3255 103.11C14.8869 94.3724 6 79.224 6 62C6 34.938 27.938 13 55 13C82.062 13 104 34.938 104 62C104 79.224 95.1131 94.3725 81.6744 103.11Z"/>
+    <path d="M92.9546 80.0076C95.5485 74.5501 97 68.4446 97 62C97 38.804 78.196 20 55 20C31.804 20 13 38.804 13 62C13 68.4446 14.4515 74.5501 17.0454 80.0076C16.3618 77.1161 16 74.1003 16 71C16 49.4609 33.4609 32 55 32C76.5391 32 94 49.4609 94 71C94 74.1003 93.6382 77.1161 92.9546 80.0076Z"/>
+    <path d="M55 89C69.3594 89 81 77.3594 81 63C81 57.9297 79.5486 53.1983 77.0387 49.1987C82.579 54.7989 86 62.5 86 71C86 88.1208 72.1208 102 55 102C37.8792 102 24 88.1208 24 71C24 62.5 27.421 54.7989 32.9613 49.1987C30.4514 53.1983 29 57.9297 29 63C29 77.3594 40.6406 89 55 89Z"/>
+    <path d="M73 63C73 72.9411 64.9411 81 55 81C45.0589 81 37 72.9411 37 63C37 53.0589 45.0589 45 55 45C64.9411 45 73 53.0589 73 63Z"/>
   </g>
-
-  <!-- Globe. -->
-  <circle cx="1400" cy="470" r="250" fill="url(#globe-fill)"/>
-  <g clip-path="url(#globe)" fill="none" stroke="#0b0c0f" stroke-opacity="0.45" stroke-width="12">
-    <ellipse cx="1400" cy="470" rx="105" ry="250"/>
-    <line x1="1400" y1="200" x2="1400" y2="740"/>
-    <path d="M 1140 376 Q 1400 434 1660 376"/>
-    <path d="M 1140 564 Q 1400 506 1660 564"/>
-  </g>
-
-  <!-- Orbit front part with its moon. -->
-  <g transform="rotate(-24 1400 470)" fill="none">
-    <path d="M 1020 470 A 380 128 0 0 0 1780 470" clip-path="url(#globe)"
-          stroke="#0b0c0f" stroke-opacity="0.5" stroke-width="40"/>
-  </g>
-  <path d="M 1020 470 A 380 128 0 0 0 1780 470" transform="rotate(-24 1400 470)"
-        fill="none" stroke="#eef0f4" stroke-opacity="0.9" stroke-width="14" stroke-linecap="round"/>
-  <circle cx="1744" cy="365" r="56" fill="#eef0f4"/>
-
-  <!-- Wordmark. -->
-  <text x="1840" y="900" text-anchor="end" font-family="Noto Sans" font-weight="700"
-        font-size="96" letter-spacing="-1" fill="#eef0f4">Prospero<tspan fill="#7cb3ff">Web</tspan></text>
-  <text x="1840" y="956" text-anchor="end" font-family="Noto Sans" font-weight="400"
-        font-size="34" fill="#9aa2b1">A WebKit web browser for the living room</text>
+  <text x="1670" y="695" text-anchor="end" font-family="DejaVu Sans" font-size="110"
+        font-weight="bold" letter-spacing="12" fill="#f4f8fc">LAMPA</text>
+  <rect x="1090" y="721" width="580" height="4" rx="2" fill="url(#line)"/>
+  <text x="1670" y="782" text-anchor="end" font-family="DejaVu Sans" font-size="39"
+        letter-spacing="5" fill="#bac8d4">ДЛЯ PLAYSTATION 5</text>
+  <text x="1670" y="968" text-anchor="end" font-family="DejaVu Sans" font-size="22"
+        letter-spacing="3" fill="#768796">Lampa PS5 · на основі ProsperoWeb</text>
 </svg>

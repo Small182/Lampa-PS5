@@ -1,0 +1,90 @@
+name: Lampa PS5 artwork package (no WebKit build)
+
+on:
+  push:
+    paths:
+      - assets/icon0.svg
+      - assets/background.svg
+      - assets/sce_sys/icon0.png
+      - assets/sce_sys/pic0.png
+      - assets/sce_sys/pic1.png
+      - .github/workflows/branding.yml
+      - scripts/ps5/native/rebrand-title.py
+  workflow_dispatch:
+    inputs:
+      base_run_id:
+        description: "Successful native-title CI run with LAMP00001.zip"
+        default: "42602538490"
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  rebrand:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Lampa PS5 assets
+        uses: actions/checkout@v4
+
+      - name: Install artwork build tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends librsvg2-bin imagemagick g++ libgomp1
+
+      - name: Render logo and PS5 background
+        run: |
+          mkdir -p build-dist/branding
+          rsvg-convert --width 512 --height 512 assets/icon0.svg -o build-dist/branding/icon0.png
+          rsvg-convert --width 3840 --height 2160 assets/background.svg -o build-dist/branding/background.png
+          convert build-dist/branding/icon0.png -alpha off -strip PNG24:build-dist/branding/icon0-rgb.png
+          convert build-dist/branding/background.png -alpha off -strip PNG24:build-dist/branding/background-rgb.png
+
+      - name: Compile tiny BC7 background encoder
+        run: |
+          cd third_party/bc7enc_rdo
+          g++ -O2 -w -DSUPPORT_BC7E=0 -fopenmp -std=c++14 -include cstdint \
+            test.cpp rdo_bc_encoder.cpp bc7enc.cpp bc7decomp.cpp bc7decomp_ref.cpp \
+            rgbcx.cpp ert.cpp lodepng.cpp utils.cpp -pthread \
+            -o ../../build-dist/branding/bc7enc
+
+      - name: Encode home-screen DDS
+        run: |
+          build-dist/branding/bc7enc -C -u4 -g -f -o \
+            build-dist/branding/background-rgb.png build-dist/branding/background.dds
+          python3 - <<'PY'
+          import pathlib, struct
+          p = pathlib.Path('build-dist/branding/background.dds')
+          blob = bytearray(p.read_bytes())
+          struct.pack_into('<I', blob, 28, 1)
+          p.write_bytes(blob)
+          PY
+
+      - name: Download successful native title (no WebKit compilation)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_RUN: ${{ inputs.base_run_id || '42602538490' }}
+        run: |
+          mkdir -p build-dist/branding/baseline
+          gh run download "$BASE_RUN" --repo "$GITHUB_REPOSITORY" \
+            --name LAMP00001.zip --dir build-dist/branding/baseline
+          test -f build-dist/branding/baseline/LAMP00001.zip
+
+      - name: Replace artwork in signed app archive
+        run: |
+          python3 scripts/ps5/native/rebrand-title.py \
+            build-dist/branding/baseline/LAMP00001.zip \
+            build-dist/branding/output/LAMP00001.zip \
+            build-dist/branding/icon0-rgb.png \
+            build-dist/branding/background.dds
+
+      - name: Upload Lampa PS5 app
+        uses: actions/upload-artifact@v4
+        with:
+          name: LAMP00001-Lampa-logo.zip
+          path: build-dist/branding/output/LAMP00001.zip
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
